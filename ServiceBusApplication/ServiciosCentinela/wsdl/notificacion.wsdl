@@ -1,0 +1,37 @@
+<WL5G3N0:definitions name="notificacionOp" targetNamespace="http://www.indra.cl/PORTABILIDADEXT/notificacionOp" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="http://www.indra.cl/PORTABILIDADEXT/types" xmlns:WL5G3N2="http://www.indra.cl/PORTABILIDADEXT/notificacionOp" xmlns:WL5G3N3="http://schemas.xmlsoap.org/wsdl/soap/">
+  <WL5G3N0:types>
+    <xsd:schema xmlns:data="http://www.indra.cl/PORTABILIDADEXT/types" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.indra.cl/PORTABILIDADEXT/notificacionOp" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:import namespace="http://www.indra.cl/PORTABILIDADEXT/types" schemaLocation="PORTABILIDADEXT.xsd">
+			</xsd:import>
+    </xsd:schema>
+  </WL5G3N0:types>
+  <WL5G3N0:message name="Notificacion">
+    <WL5G3N0:part element="WL5G3N1:NotificacionType" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:message name="NotificacionResp">
+    <WL5G3N0:part element="WL5G3N1:ResultadoNotificacionType" name="parameters"/>
+  </WL5G3N0:message>
+  <WL5G3N0:portType name="notificacionOpSOAPF">
+    <WL5G3N0:operation name="notificacion">
+      <WL5G3N0:input message="WL5G3N2:Notificacion"/>
+      <WL5G3N0:output message="WL5G3N2:NotificacionResp"/>
+    </WL5G3N0:operation>
+  </WL5G3N0:portType>
+  <WL5G3N0:binding name="notificacionOpFSoapBinding" type="WL5G3N2:notificacionOpSOAPF">
+    <WL5G3N3:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <WL5G3N0:operation name="notificacion">
+      <WL5G3N3:operation soapAction="http://www.indra.cl/PORTABILIDADEXT/notificacion"/>
+      <WL5G3N0:input>
+        <WL5G3N3:body use="literal"/>
+      </WL5G3N0:input>
+      <WL5G3N0:output>
+        <WL5G3N3:body use="literal"/>
+      </WL5G3N0:output>
+    </WL5G3N0:operation>
+  </WL5G3N0:binding>
+  <WL5G3N0:service name="notificacionOpSOAPFWS">
+    <WL5G3N0:port binding="WL5G3N2:notificacionOpFSoapBinding" name="notificacionOpSOAPFPort">
+      <WL5G3N3:address location="http://osbtest.clarochile.cl:80/CENTINELA/notificacionOpSOAPFWSProxy"/>
+    </WL5G3N0:port>
+  </WL5G3N0:service>
+</WL5G3N0:definitions>

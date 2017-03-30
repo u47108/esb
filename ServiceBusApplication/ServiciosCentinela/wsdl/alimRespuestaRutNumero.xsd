@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Oracle JAX-WS 2.1.5. --><schema targetNamespace="http://www.indra.cl/PORTABILIDADEXT/types" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.indra.cl/PORTABILIDADEXT/types" xmlns:mime="http://www.w3.org/2005/05/xmlmime">
+    <element name="NotificacionType">
+        <complexType>
+            <sequence>
+                <element name="parametrosNotificacion" type="tns:ParametrosNotificacionType"/>
+            </sequence>
+        </complexType>
+    </element>
+    <complexType name="ParametrosNotificacionType">
+        <sequence>
+            <element name="identificadorNPNODE" type="long"/>
+            <element name="idSistema" type="string"/>
+            <element name="identificadorOAP" type="string"/>
+            <element name="tipoPeticion" type="string"/>
+            <element name="estado" type="string"/>
+            <element name="subEstado" type="string" minOccurs="0"/>
+            <element name="descripcionEstado" type="string"/>
+            <element name="fechaEstado" type="dateTime"/>
+            <element name="tipoServicio" type="string"/>
+            <element name="modalidadOrigen" type="string"/>
+            <element name="Fvc" type="dateTime" minOccurs="0"/>
+            <element name="causeCode" type="string" minOccurs="0"/>
+            <element name="msisdnNotificacionInfoList" type="tns:MsisdnNotificacionInfoListType" minOccurs="0"/>
+            <element name="listaDocumentosPortabilidad" type="tns:DocumentosNotifPortabilidadListType" minOccurs="0"/>
+        </sequence>
+    </complexType>
+    <complexType name="MsisdnNotificacionInfoType">
+        <sequence>
+            <element name="msisdn" type="string"/>
+            <element name="modalidadReceptora" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="MsisdnNotificacionInfoListType">
+        <sequence>
+            <element name="msisdnInfo" type="tns:MsisdnNotificacionInfoType" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    <complexType name="DocumentosNotifPortabilidadType">
+        <sequence>
+            <element name="tipoDocumento" type="string"/>
+            <element name="nombreFichero" type="string" minOccurs="0"/>
+            <element name="comentarios" type="string" minOccurs="0"/>
+            <element name="tipoPeticion" type="string" minOccurs="0">
+                <annotation>
+                    <documentation>Tipo de Peticion. Por defecto ALIM</documentation>
+                </annotation>
+            </element>
+            <element name="idDocumentacion" type="long"/>
+            <element name="msisdn" type="string" minOccurs="0">
+                <annotation>
+                    <documentation>MSISDN sobre el que aplica el documento. En caso de
+						no venir relleno aplicaroa a todos</documentation>
+                </annotation>
+            </element>
+            <element name="datos" type="base64Binary" mime:expectedContentTypes="multipart/*"/>
+            <element name="fecha" type="dateTime">
+                <annotation>
+                    <documentation>Fecha del documento en el sistema</documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="DocumentosNotifPortabilidadListType">
+        <sequence>
+            <element name="doc" type="tns:DocumentosNotifPortabilidadType" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    <element name="ResultadoNotificacionType">
+        <complexType>
+            <sequence>
+                <element name="Estado" type="string"/>
+                <element name="Descripcion" type="string" minOccurs="0"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="RespuestaFactPortabilidadType">
+        <complexType>
+            <sequence>
+                <element name="parametrosFactPortabilidad" type="tns:ParametrosFactType"/>
+            </sequence>
+        </complexType>
+    </element>
+    <complexType name="ParametrosFactType">
+        <sequence>
+            <element name="identificadorNPNODE" type="long"/>
+            <element name="idSistema" type="string"/>
+            <element name="portId" type="string"/>
+            <element name="cantidadErrores" type="long">
+                <annotation>
+                    <documentation>0: No hay errores
+									>0: Cant. errores</documentation>
+                </annotation>
+            </element>
+            <element name="errores" type="tns:ErrorListType"/>
+        </sequence>
+    </complexType>
+    <complexType name="ErrorType">
+        <sequence>
+            <element name="msisdn" type="string"/>
+            <element name="equipo" type="string" minOccurs="0">
+                <annotation>
+                    <documentation>IMEI del equipo móvil. Nulo en el caso de teléfono fijo</documentation>
+                </annotation>
+            </element>
+            <element name="equipoRobado" type="long" minOccurs="0">
+                <annotation>
+                    <documentation>0: NO 1: SI</documentation>
+                </annotation>
+            </element>
+            <element name="tipoServicio" type="string">
+                <annotation>
+                    <documentation>Indica si el tipo de servicio coincide o no con el
+						especificado</documentation>
+                </annotation>
+            </element>
+            <element name="portabilidadEnCurso" type="long">
+                <annotation>
+                    <documentation>0: no tiene portabilidad en curso 1: tiene
+						portabilidad en curso</documentation>
+                </annotation>
+            </element>
+            <element name="diasNuevaSolicitud" type="long">
+                <annotation>
+                    <documentation>0-60. Valor de los dias que faltan hasta la proxima</documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="ErrorListType">
+        <sequence>
+            <element name="error" type="tns:ErrorType" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    <element name="RespuestaRutNumeroType">
+        <complexType>
+            <sequence>
+                <element name="parametrosRutNumero" type="tns:ParametrosCNUType"/>
+            </sequence>
+        </complexType>
+    </element>
+    <complexType name="ParametrosCNUType">
+        <sequence>
+            <element name="identificadorNPNODE" type="long"/>
+            <element name="idSistema" type="string"/>
+            <element name="portId" type="string"/>
+            <element name="IDO" type="string">
+                <annotation>
+                    <documentation>Identificador de la empresa donadora IDO</documentation>
+                </annotation>
+            </element>
+            <element name="msisdnResultadoList" type="tns:DatosNumeroListType"/>
+            <element name="codigoRespuestaOAP" type="int"/>
+            <element name="descripcionRespuestaOAP" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="DatosNumeroType">
+        <sequence>
+            <element name="msisdn" type="string"/>
+            <element name="rutTitular" type="string"/>
+            <element name="modalidadOrigen" type="string"/>
+            <element name="tipoServicio" type="string"/>
+            <element name="datosConsulta" type="tns:DatosConsultaType"/>
+        </sequence>
+    </complexType>
+    <complexType name="DatosConsultaType">
+        <sequence>
+            <element name="estadoLinea" type="long">
+                <annotation>
+                    <documentation>Indica si la linea está activa o no.
+						0: La linea esta activa. Es portable
+						1: No activa. No es portable.</documentation>
+                </annotation>
+            </element>
+            <element name="confirmacionTitularidad" type="long">
+                <annotation>
+                    <documentation>Indica si el RUT del titular facilitado se
+						corresponde con el asociado a la numeración involucrada
+						0: es correcta. En caso de prepago = 0.
+						1: No es correcta</documentation>
+                </annotation>
+            </element>
+            <element name="confirmacionModalidad" type="long">
+                <annotation>
+                    <documentation>Indica si la modalidad declarada (pospago,
+					prepago)
+					para la numeración involucrada es o no el que tiene
+					registrado el
+					donante.
+					0: Prepago
+					1: Pospago.	
+					2: Ninguno. En caso de notificacion a una coansulta realizada por los SSCC, en caso de una consulta desde el OAP no aplica.</documentation>
+                </annotation>
+            </element>
+            <element name="confirmacionServicio" type="long"/>
+            <element name="saldoPendienteNumero" type="long" minOccurs="0"/>
+            <element name="docPendiente" type="string" minOccurs="0">
+                <annotation>
+                    <documentation>Identificador o Número de documento pendiente de
+						pago, asociado al número
+						telefónico</documentation>
+                </annotation>
+            </element>
+            <element name="servicioEspecial" type="long">
+                <annotation>
+                    <documentation>Contiene las respuestas del tipo de servicio:
+						Distito de cero no portable
+						0: No es servicio especial
+						1: Servicio
+						RDSI con dos números
+						2: Servicio PABX</documentation>
+                </annotation>
+            </element>
+            <element name="fechaDocPendiente" type="date" minOccurs="0">
+                <annotation>
+                    <documentation>fecha del documento pendiente de
+						pago, asociado al número
+						telefónico</documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="DatosNumeroListType">
+        <sequence>
+            <element name="datosNumero" type="tns:DatosNumeroType" maxOccurs="100"/>
+        </sequence>
+    </complexType>
+    <complexType name="ParametrosNotifDocType">
+        <sequence>
+            <element name="identificadorNPNODE" type="long"/>
+            <element name="idSistema" type="string"/>
+            <element name="portId" type="string"/>
+            <element name="estadoEntrega" type="long"/>
+            <element name="estadoEntregaPlazo" type="long"/>
+            <element name="listaErrorDocs" type="tns:ErrorDocsListType"/>
+        </sequence>
+    </complexType>
+    <complexType name="ErrorDocType">
+        <sequence>
+            <element name="tipoDocumento" type="long"/>
+            <element name="causa" type="string"/>
+        </sequence>
+    </complexType>
+    <complexType name="ErrorDocsListType">
+        <sequence>
+            <element name="errorDoc" type="tns:ErrorDocType" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    <element name="ParametrosNotificacionDocType">
+        <complexType>
+            <sequence>
+                <element name="parametrosNotifEnvioDoc" type="tns:ParametrosNotifDocType"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="ConsultaRUTDonanteSync" type="tns:ConsultaRUTDonanteType"/>
+    <element name="ConsultaRUTDonanteAsync" type="tns:ConsultaRUTDonanteType"/>
+    <complexType name="ConsultaRUTDonanteType">
+        <sequence>
+            <element name="identificadorNPNODE" type="long"/>
+            <element name="portId" type="string"/>
+            <element name="IDO" type="string">
+                <annotation>
+                    <documentation>Identificador de la empresa donadora IDO</documentation>
+                </annotation>
+            </element>
+            <element name="rutSolicitante" type="string" minOccurs="0"/>
+            <element name="rutTitular" type="string"/>
+            <element name="modalidadOrigen" type="string"/>
+            <element name="tipoServicio" type="string"/>
+            <element name="msisdnsList" type="tns:MsisdnCRNListType"/>
+            <element name="tipoServicioDestino" type="string" minOccurs="0"/>
+        </sequence>
+    </complexType>
+    <complexType name="MsisdnCRNListType">
+        <sequence>
+            <element name="msisdn" type="string" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    <element name="ResultadoConsultaRUTDonanteType">
+        <complexType>
+            <sequence>
+                <element name="msisdnResultadoList" type="tns:DatosConsultaSSCCListType"/>
+                <element name="datosRespuesta" type="tns:DatosRespuestaType"/>
+            </sequence>
+        </complexType>
+    </element>
+    <complexType name="DatosConsultaSSCCType">
+        <sequence>
+            <element name="msisdn" type="string"/>
+            <element name="estadoLinea" type="long">
+                <annotation>
+                    <documentation>Indica si la linea está activa o no.
+						0: La linea esta activa. Es portable
+						1: No activa. No es portable.</documentation>
+                </annotation>
+            </element>
+            <element name="titularidad" type="long">
+                <annotation>
+                    <documentation>Indica si el RUT del titular facilitado se
+						corresponde con el asociado a la numeración involucrada
+						0: escorrecta
+						1: No es correcta. En caso de prepago == 0</documentation>
+                </annotation>
+            </element>
+            <element name="modalidad" type="long">
+                <annotation>
+                    <documentation>Indica si la modalidad declarada (pospago,
+					prepago) para la numeración involucrada es o no el que tiene registrado el
+					donante.
+					0: Prepago.
+					1: Pospago.</documentation>
+                </annotation>
+            </element>
+            <element name="servicio" type="long">
+                <annotation>
+                    <documentation>0: Móvil
+						1:  Fija
+						2:  Voip
+						3:  Rural
+						4: MPPC
+						Es incorrecto si el servicio del teléfono no corresponde a la consulta.</documentation>
+                </annotation>
+            </element>
+            <element name="saldoPendienteNumero" type="long" minOccurs="0"/>
+            <element name="docPendiente" type="string" minOccurs="0">
+                <annotation>
+                    <documentation>Identificador o Número de documento pendiente de pago, asociado al número
+						telefónico</documentation>
+                </annotation>
+            </element>
+            <element name="servicioEspecial" type="long">
+                <annotation>
+                    <documentation>Contiene las respuestas del tipo de servicio: Distito de cero no portable 
+					0: No es servicio especial
+					1: Servicio RDSI con dos números
+					2: Servicio PABX</documentation>
+                </annotation>
+            </element>
+            <element name="fechaDocPendiente" type="dateTime" minOccurs="0">
+                <annotation>
+                    <documentation>Fecha del documento pendiente de pago</documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="DatosConsultaSSCCListType">
+        <sequence>
+            <element name="datosNumero" type="tns:DatosConsultaSSCCType" maxOccurs="unbounded"/>
+        </sequence>
+    </complexType>
+    <element name="ValidaPrepagoDonanteType">
+        <complexType>
+            <sequence>
+                <element name="identificadorNPNODE" type="long"/>
+                <element name="portId" type="string"/>
+                <element name="msisdn" type="string"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="ResultadoValidaPrepagoDonanteType">
+        <complexType>
+            <sequence>
+                <element name="resultadoPrepago" type="tns:DatosPrepagoType"/>
+                <element name="datosRespuesta" type="tns:DatosRespuestaType"/>
+            </sequence>
+        </complexType>
+    </element>
+    <complexType name="DatosPrepagoType">
+        <sequence>
+            <element name="msisdn" type="string"/>
+            <element name="modalidadOrigen" type="string"/>
+        </sequence>
+    </complexType>
+    <element name="DatosRespuestaElement">
+        <complexType>
+            <sequence>
+                <element name="respuesta" type="tns:DatosRespuestaType"/>
+            </sequence>
+        </complexType>
+    </element>
+    <complexType name="DatosRespuestaType">
+        <sequence>
+            <element name="codigoError" type="string"/>
+            <element name="Descripcion" type="string"/>
+            <element name="identificadorNPNODE" type="long" minOccurs="0"/>
+        </sequence>
+    </complexType>
+</schema>
